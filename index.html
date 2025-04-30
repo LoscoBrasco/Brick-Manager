@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BrickBase</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>BrickBase - Il tuo inventario LEGO</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>🧱 BrickBase</h1>
-    <p>Carica il tuo database LEGO (.db) e consulta i tuoi pezzi</p>
-  </header>
+  <h1>🧱 BrickBase</h1>
 
-  <main>
-    <label for="db-file">📂 Carica il tuo file .db:</label>
-    <input type="file" id="db-file" accept=".db" />
+  <div class="upload-section">
+    <label for="dbfile">📦 Carica il tuo database SQLite:</label>
+    <input type="file" id="dbfile" accept=".sqlite,.db">
+  </div>
 
-    <section id="output">
-      <!-- I risultati compariranno qui -->
-    </section>
-  </main>
+  <div id="inventory-section" class="hidden">
+    <h2>🔍 Cerca un pezzo</h2>
+    <input type="text" id="searchInput" placeholder="Inserisci ID o nome pezzo...">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <table id="resultsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Colore</th>
+          <th>Quantità</th>
+          <th>Aggiungi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
