@@ -1,0 +1,70 @@
+// Variabile globale per il database SQLite
+let db;
+
+document.getElementById('loadButton').addEventListener('change', handleFileSelect, false);
+
+// Funzione per caricare il file SQLite
+function handleFileSelect(event) {
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    
+    reader.onload = function(e) {
+        // Carica il file SQLite nel database
+        const data = new Uint8Array(e.target.result);
+        initDb(data);
+    };
+    
+    reader.readAsArrayBuffer(file);
+}
+
+// Inizializza il database con sql.js
+function initDb(data) {
+    sqljs.initSqlJs().then(function(SQL) {
+        db = new SQL.Database(data);
+        console.log("Database caricato con successo!");
+
+        // Carica i dati dalla tabella e aggiorna l'interfaccia
+        loadDataFromDb();
+    });
+}
+
+// Funzione per caricare i dati dal database e mostrare il selettore
+function loadDataFromDb() {
+    const stmt = db.prepare("SELECT part_num, name FROM parts"); // Adatta questa query al nome della tua tabella
+    let result = [];
+
+    while (stmt.step()) {
+        result.push(stmt.getAsObject());
+    }
+
+    updateSelectMenu(result);
+}
+
+// Funzione per aggiornare il menù a tendina con i dati
+function updateSelectMenu(data) {
+    const select = document.getElementById('inventorySelect');
+    select.innerHTML = ''; // Pulisce il menù a tendina
+
+    data.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.part_num;
+        option.textContent = item.name;
+        select.appendChild(option);
+    });
+}
+
+// Funzione per salvare il database in un file
+function saveDbToFile() {
+    const data = db.export();
+    const buffer = new Uint8Array(data);
+
+    const blob = new Blob([buffer], { type: 'application/sqlite' });
+    const link = document.createElement('a');
+
+    link.href = URL.createObjectURL(blob);
+    link.download = 'database_bricks.sqlite';
+    link.click();
+}
+
+// Aggiungi l'evento per il salvataggio del database
+document.getElementById('saveButton').addEventListener('click', saveDbToFile);
