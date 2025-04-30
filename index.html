@@ -1,48 +1,38 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Brick Manager</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- sql.js per gestire SQLite in browser -->
-  <script src="https://cdn.jsdelivr.net/npm/sql.js@1.6.1/dist/sql-wasm.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="favicon.ico" />
 </head>
 <body>
   <header>
-    <img src="lego-logo.png" alt="Logo Brick Manager" class="logo">
+    <img src="logo.png" alt="Brick Manager Logo" class="logo"/>
     <h1>Brick Manager</h1>
   </header>
 
-  <section class="controls">
-    <div class="control-group">
-      <label>📂 Database SQLite:</label>
-      <input type="file" id="db-file" accept=".sqlite,.db">
-      <button id="btn-load-db">Carica DB</button>
-    </div>
-    <div class="control-group hidden" id="add-group">
-      <label>🔍 Cerca Pezzo:</label>
-      <input type="text" id="search-box" placeholder="Digita nome o ID…">
-      <label>➕ Nuovo Pezzo:</label>
-      <input type="text" id="new-part-name" placeholder="Nome pezzo">
-      <input type="text" id="new-part-color" placeholder="Colore">
-      <input type="number" id="new-part-qty" placeholder="Quantità" min="1">
-      <button id="btn-add-item">Aggiungi</button>
-    </div>
-  </section>
+  <main>
+    <section>
+      <label for="dbFile">Carica il tuo database LEGO (.db):</label>
+      <input type="file" id="dbFile" accept=".db"/>
+      <button onclick="loadDB()">Carica Database</button>
+    </section>
 
-  <section id="table-section" class="hidden">
-    <button id="btn-export-csv">Esporta CSV</button>
-    <table id="inv-table">
-      <thead>
-        <tr>
-          <th>ID</th><th>Nome</th><th>Colore</th><th>Quantità</th><th>Azioni</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
+    <section id="controls" style="display:none;">
+      <input type="text" id="searchInput" placeholder="Cerca pezzo per nome o ID"/>
+      <button onclick="exportInventory()">Esporta inventario</button>
+    </section>
 
-  <script src="script.js"></script>
+    <section id="output"></section>
+  </main>
+
+  <footer>
+    <p>Powered by LEGO® – Non ufficiale | Samp Style 💙🤍🖤❤️</p>
+  </footer>
+
+  <script src="sql-wasm.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
