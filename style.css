@@ -1,43 +1,35 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 2rem;
+  text-align: center;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
+header {
+  background-color: #ffcc00;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
 }
 
-h1 {
-    font-size: 2rem;
-    color: #ff6f00;  /* Colore che richiama il tema LEGO */
+input[type="file"] {
+  margin: 1rem 0;
+  padding: 0.5rem;
 }
 
-#loadButton {
-    margin-top: 20px;
-    padding: 10px 20px;
+table {
+  margin: 2rem auto;
+  border-collapse: collapse;
+  width: 80%;
 }
 
-select, button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1rem;
+table th, table td {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  background-color: #fff;
 }
 
-#output {
-    margin-top: 20px;
-    font-size: 1rem;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+table th {
+  background-color: #e6e6e6;
 }
