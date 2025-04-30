@@ -2,36 +2,47 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>BrickBase - Il tuo inventario LEGO</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Brick Manager</title>
   <link rel="stylesheet" href="style.css">
+  <!-- sql.js per gestire SQLite in browser -->
+  <script src="https://cdn.jsdelivr.net/npm/sql.js@1.6.1/dist/sql-wasm.js"></script>
 </head>
 <body>
-  <h1>🧱 BrickBase</h1>
+  <header>
+    <img src="lego-logo.png" alt="Logo Brick Manager" class="logo">
+    <h1>Brick Manager</h1>
+  </header>
 
-  <div class="upload-section">
-    <label for="dbfile">📦 Carica il tuo database SQLite:</label>
-    <input type="file" id="dbfile" accept=".sqlite,.db">
-  </div>
+  <section class="controls">
+    <div class="control-group">
+      <label>📂 Database SQLite:</label>
+      <input type="file" id="db-file" accept=".sqlite,.db">
+      <button id="btn-load-db">Carica DB</button>
+    </div>
+    <div class="control-group hidden" id="add-group">
+      <label>🔍 Cerca Pezzo:</label>
+      <input type="text" id="search-box" placeholder="Digita nome o ID…">
+      <label>➕ Nuovo Pezzo:</label>
+      <input type="text" id="new-part-name" placeholder="Nome pezzo">
+      <input type="text" id="new-part-color" placeholder="Colore">
+      <input type="number" id="new-part-qty" placeholder="Quantità" min="1">
+      <button id="btn-add-item">Aggiungi</button>
+    </div>
+  </section>
 
-  <div id="inventory-section" class="hidden">
-    <h2>🔍 Cerca un pezzo</h2>
-    <input type="text" id="searchInput" placeholder="Inserisci ID o nome pezzo...">
-
-    <table id="resultsTable">
+  <section id="table-section" class="hidden">
+    <button id="btn-export-csv">Esporta CSV</button>
+    <table id="inv-table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Colore</th>
-          <th>Quantità</th>
-          <th>Aggiungi</th>
+          <th>ID</th><th>Nome</th><th>Colore</th><th>Quantità</th><th>Azioni</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
-  </div>
+  </section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
-  <script src="main.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
