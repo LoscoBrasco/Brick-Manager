@@ -1,0 +1,63 @@
+let db;
+
+document.getElementById('db-file').addEventListener('change', async function (e) {
+  const file = e.target.files[0];
+  if (!file) return alert("Seleziona un file .db valido!");
+
+  const reader = new FileReader();
+  reader.onload = async function () {
+    const SQL = await initSqlJs({
+      locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+    });
+    const uInt8Array = new Uint8Array(reader.result);
+    db = new SQL.Database(uInt8Array);
+
+    alert("✅ Database caricato con successo!");
+
+    // ESEMPIO: mostra i primi 5 pezzi nella tabella 'parts'
+    try {
+      const result = db.exec("SELECT name, part_num FROM parts LIMIT 5;");
+      displayResults(result);
+    } catch (err) {
+      alert("Errore durante l'esecuzione della query.");
+      console.error(err);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+function displayResults(results) {
+  const output = document.getElementById("output");
+  output.innerHTML = "";
+
+  if (!results.length) {
+    output.textContent = "Nessun risultato trovato.";
+    return;
+  }
+
+  const table = document.createElement("table");
+  const headers = results[0].columns;
+
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  headers.forEach(col => {
+    const th = document.createElement("th");
+    th.textContent = col;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  results[0].values.forEach(row => {
+    const tr = document.createElement("tr");
+    row.forEach(cell => {
+      const td = document.createElement("td");
+      td.textContent = cell;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  output.appendChild(table);
+}
